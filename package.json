@@ -1,0 +1,32 @@
+{
+  "name": "prompt-enhancer",
+  "version": "1.0.0",
+  "description": "MCP server that silently enhances vague prompts with context and focus constraints",
+  "type": "module",
+  "license": "MIT",
+  "author": "Elvis Yong",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/elvisyongwk/prompt-enhancer.git"
+  },
+  "keywords": ["mcp", "prompt-engineering", "ai", "ollama", "cline", "model-context-protocol"],
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "dev": "tsx src/index.ts"
+  },
+  "dependencies": {
+    "@hono/node-server": "^2.0.4",
+    "@modelcontextprotocol/sdk": "^1.29.0",
+    "express": "^5.2.1",
+    "zod": "^3.24.3"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.6",
+    "@types/node": "^22.15.0",
+    "tsx": "^4.19.0",
+    "typescript": "^5.7.0"
+  },
+  "packageManager": "yarn@4.15.0"
+}
