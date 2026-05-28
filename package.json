@@ -9,7 +9,14 @@
     "type": "git",
     "url": "https://github.com/elvisyongwk/prompt-enhancer.git"
   },
-  "keywords": ["mcp", "prompt-engineering", "ai", "ollama", "cline", "model-context-protocol"],
+  "keywords": [
+    "mcp",
+    "prompt-engineering",
+    "ai",
+    "ollama",
+    "cline",
+    "model-context-protocol"
+  ],
   "main": "dist/index.js",
   "scripts": {
     "build": "tsc",
