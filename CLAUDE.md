@@ -79,10 +79,19 @@ Configured via `.env` (copy from `.env.example`):
 | `ANTHROPIC_API_KEY` | — | Required for `anthropic` mode |
 | `ANTHROPIC_MODEL` | `claude-haiku-4-20250414` | Anthropic model |
 
-## Prompt enhancement behaviour (Suggestion)
+## Prompt enhancement behaviour
 
-When you receive a user prompt that is short or vague (≤50 words), BEFORE starting work on it, call the `enhance_prompt` MCP tool to get an enhanced version. Use the enhanced prompt as your actual task directive.
+You MUST call `enhance_prompt` as the first step of any new task that meets ALL of these conditions:
 
-Call with: `{ "prompt": "<user's message>", "context": "<active file, framework, recent errors>" }`
+- The prompt is ≤ 50 words, OR is vague/ambiguous (e.g. "fix the bug", "add a test")
+- It is the start of a new task — not a follow-up, correction, or clarification mid-task
+- The user has not said "do not enhance" or similar
 
-Do NOT enhance if the prompt is >50 words, is a follow-up to an ongoing task, or the user says "do not enhance".
+Call with:
+```json
+{ "prompt": "<exact user message>", "context": "<active file, language, framework, recent errors>" }
+```
+
+Use the enhanced result as your actual working directive — do not fall back to the original short prompt.
+
+Skip enhancement if: prompt is already detailed (> 50 words), user is answering a question you asked, or user explicitly opts out.
