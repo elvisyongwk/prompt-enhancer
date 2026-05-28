@@ -37,10 +37,19 @@ Health check: `GET http://localhost:3100/health`
 ### Run Locally (development)
 
 ```bash
+cp .env.example .env   # configure your preferred mode
 yarn install
-yarn build
-node dist/index.js
+yarn dev               # tsx watch — no compile step, auto-reloads on change
 ```
+
+Or run the compiled output:
+
+```bash
+yarn build
+yarn start
+```
+
+> **Note:** `claude-code` mode requires the `claude` CLI to be installed and authenticated on your machine. It does not work inside Docker without extra setup.
 
 ## Connect to Your AI Agent
 
@@ -108,10 +117,11 @@ Do NOT enhance if the prompt is >50 words, is a follow-up, or the user says "do 
 
 | Mode | Backend | Cost | Setup |
 |------|---------|------|-------|
-| `rules` (default) | Template heuristics | Free | None |
-| `ollama` | Local Ollama | Free | `ollama pull qwen2.5:3b` |
+| `rules` | Template heuristics | Free | None |
+| `ollama` (default) | Local Ollama | Free | `ollama pull qwen2.5:3b` |
 | `openai` | OpenAI API | ~$0.001/prompt | Set `OPENAI_API_KEY` |
 | `anthropic` | Anthropic API | ~$0.001/prompt | Set `ANTHROPIC_API_KEY` |
+| `claude-code` | Local `claude` CLI | Free (uses Claude Code auth) | Claude Code installed + authenticated; **local only, not Docker** |
 
 Set mode via `ENHANCER_MODE` env var, or change at runtime with the `set_enhancer_mode` tool, or override per-call via the `mode` parameter.
 
@@ -129,7 +139,7 @@ Enhances a short/vague prompt with context, scope constraints, and focus directi
 |-----------|------|----------|-------------|
 | `prompt` | string | yes | The user's short/vague prompt |
 | `context` | string | no | Project context (active file, framework, errors, file tree) |
-| `mode` | enum | no | Override: `rules`, `ollama`, `openai`, `anthropic` |
+| `mode` | enum | no | Override: `rules`, `ollama`, `openai`, `anthropic`, `claude-code` |
 
 **Returns:**
 ```json
@@ -147,7 +157,7 @@ Change the active enhancement mode at runtime.
 
 | Parameter | Type | Required | Description |
 |-----------|------|----------|-------------|
-| `mode` | enum | yes | `rules`, `ollama`, `openai`, `anthropic` |
+| `mode` | enum | yes | `rules`, `ollama`, `openai`, `anthropic`, `claude-code` |
 
 ### `get_enhancer_mode`
 

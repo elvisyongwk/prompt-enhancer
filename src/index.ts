@@ -25,7 +25,7 @@ function createServer(): McpServer {
       inputSchema: {
         prompt: z.string().describe("The user's original short/vague prompt"),
         context: z.string().optional().describe("Project context: active file, framework, recent errors, file tree"),
-        mode: z.enum(["rules", "ollama", "openai", "anthropic"]).optional().describe("Enhancement mode override"),
+        mode: z.enum(["rules", "ollama", "openai", "anthropic", "claude-code"]).optional().describe("Enhancement mode override"),
       },
     },
     async ({ prompt, context, mode }) => {
@@ -44,7 +44,7 @@ function createServer(): McpServer {
     "set_enhancer_mode",
     {
       description: "Change the enhancement mode at runtime without restarting the server.",
-      inputSchema: { mode: z.enum(["rules", "ollama", "openai", "anthropic"]).describe("The new mode") },
+      inputSchema: { mode: z.enum(["rules", "ollama", "openai", "anthropic", "claude-code"]).describe("The new mode") },
     },
     async ({ mode }) => {
       const prev = currentMode;

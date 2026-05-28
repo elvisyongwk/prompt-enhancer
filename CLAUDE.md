@@ -2,6 +2,23 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## Public repository
+
+This is a **public repository** hosted on GitHub. Anything committed here is visible to everyone on the internet. Before every commit, run the checklist below.
+
+## Commit risk checklist
+
+Before staging or committing **any** file, verify each item:
+
+- [ ] No `.env` file or file containing real API keys (`OPENAI_API_KEY`, `ANTHROPIC_API_KEY`, etc.)
+- [ ] `.env.example` contains only placeholder values (e.g. `your-key-here`), never real credentials
+- [ ] No personal access tokens, private URLs, or internal hostnames
+- [ ] No debugging artifacts (`*.log`, temp output files) — add them to `.gitignore` if needed
+- [ ] No editor/tool config files with private paths or tokens (e.g. `.clinerules`, `.cursor/`) — gitignore if they are local-only
+- [ ] `git diff --staged` reviewed for accidental secrets before `git commit`
+
+If any item fails, do **not** proceed with the commit. Fix the issue first (gitignore the file, remove the secret, rotate the key if it was ever committed).
+
 ## Commands
 
 ```bash
@@ -41,6 +58,7 @@ This is a **StreamableHTTP MCP server** that intercepts short prompts from AI ag
 | `OllamaProvider` | `modes/ollama.ts` | Local Ollama REST API |
 | `OpenAIProvider` | `modes/openai.ts` | OpenAI chat completions API |
 | `AnthropicProvider` | `modes/anthropic.ts` | Anthropic messages API |
+| `ClaudeCodeProvider` | `modes/claude-code.ts` | Local `claude` CLI subprocess (no API key needed; local only) |
 
 All providers implement the `LLMProvider` interface from `src/types.ts`: a single `enhance(prompt, context, systemPrompt)` method that returns a string.
 
@@ -78,6 +96,9 @@ Configured via `.env` (copy from `.env.example`):
 | `OPENAI_MODEL` | `gpt-4o-mini` | OpenAI model |
 | `ANTHROPIC_API_KEY` | — | Required for `anthropic` mode |
 | `ANTHROPIC_MODEL` | `claude-haiku-4-20250414` | Anthropic model |
+| `CLAUDE_CODE_MODEL` | `claude-haiku-4-5-20251001` | Model used by `claude-code` mode |
+
+> **Note:** `claude-code` mode spawns the `claude` CLI as a subprocess. It works out of the box when running locally (requires Claude Code installed and authenticated). It does **not** work inside Docker without additional setup (installing the CLI and mounting auth into the container).
 
 ## Prompt enhancement behaviour
 

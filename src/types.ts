@@ -1,4 +1,4 @@
-export type EnhancerMode = "rules" | "ollama" | "openai" | "anthropic";
+export type EnhancerMode = "rules" | "ollama" | "openai" | "anthropic" | "claude-code";
 
 export interface EnhanceRequest {
   prompt: string;

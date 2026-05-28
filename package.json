@@ -20,8 +20,10 @@
   "main": "dist/index.js",
   "scripts": {
     "build": "tsc",
-    "start": "node dist/index.js",
-    "dev": "tsx src/index.ts"
+    "prestart": "test -f .env || cp .env.example .env",
+    "start": "node --env-file .env dist/index.js",
+    "predev": "test -f .env || cp .env.example .env",
+    "dev": "tsx --env-file .env src/index.ts"
   },
   "dependencies": {
     "@hono/node-server": "^2.0.4",

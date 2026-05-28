@@ -4,3 +4,5 @@ dist/
 .yarn/cache
 .yarn/install-state.gz
 .vscode/
+.clinerules
+*story_log.json

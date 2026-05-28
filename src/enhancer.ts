@@ -4,6 +4,7 @@ import { RulesProvider } from "./modes/rules.js";
 import { OllamaProvider } from "./modes/ollama.js";
 import { OpenAIProvider } from "./modes/openai.js";
 import { AnthropicProvider } from "./modes/anthropic.js";
+import { ClaudeCodeProvider } from "./modes/claude-code.js";
 
 const PASSTHROUGH_WORD_THRESHOLD = 50;
 
@@ -17,6 +18,8 @@ function getProvider(mode: EnhancerMode): LLMProvider {
       return new OpenAIProvider();
     case "anthropic":
       return new AnthropicProvider();
+    case "claude-code":
+      return new ClaudeCodeProvider();
   }
 }
 
